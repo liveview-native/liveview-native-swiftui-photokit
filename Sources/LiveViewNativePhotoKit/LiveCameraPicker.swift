@@ -60,7 +60,7 @@ struct LiveCameraPicker<Root: RootRegistry>: View {
                 guard let phxUploadRef else { return }
                 Task {
                     do {
-                        try await formModel?.queueFileUpload(id: phxUploadRef, contents: contents, fileType: fileType, name: name ?? "photo", coordinator: $liveElement.context.coordinator)
+                        try await formModel?.queueFileUpload(name: name ?? "photo", id: phxUploadRef, contents: contents, fileType: fileType, fileName: name ?? "photo", coordinator: $liveElement.context.coordinator)
                     } catch {
                         logger.log(level: .error, "\(error.localizedDescription)")
                     }
@@ -199,8 +199,6 @@ struct LiveCameraPicker<Root: RootRegistry>: View {
                             exporter.outputURL = exportURL
                             await exporter.export()
                             
-                            print(exporter.error)
-                            
                             parent.onCapture(try Data(contentsOf: exportURL), .mpeg4Movie)
                             parent.dismiss()
                         } catch {
@@ -223,7 +221,7 @@ struct LiveCameraPicker<Root: RootRegistry>: View {
     }
 }
 
-extension UIImagePickerController.CameraDevice: AttributeDecodable {
+extension UIImagePickerController.CameraDevice: @retroactive AttributeDecodable {
     public init(from attribute: Attribute?, on element: ElementNode) throws {
         guard let value = attribute?.value
         else { throw AttributeDecodingError.missingAttribute(Self.self) }
@@ -239,7 +237,7 @@ extension UIImagePickerController.CameraDevice: AttributeDecodable {
     }
 }
 
-extension UIImagePickerController.CameraCaptureMode: AttributeDecodable {
+extension UIImagePickerController.CameraCaptureMode: @retroactive AttributeDecodable {
     public init(from attribute: Attribute?, on element: ElementNode) throws {
         guard let value = attribute?.value
         else { throw AttributeDecodingError.missingAttribute(Self.self) }
@@ -255,7 +253,7 @@ extension UIImagePickerController.CameraCaptureMode: AttributeDecodable {
     }
 }
 
-extension UIImagePickerController.CameraFlashMode: AttributeDecodable {
+extension UIImagePickerController.CameraFlashMode: @retroactive AttributeDecodable {
     public init(from attribute: Attribute?, on element: ElementNode) throws {
         guard let value = attribute?.value
         else { throw AttributeDecodingError.missingAttribute(Self.self) }
@@ -273,7 +271,7 @@ extension UIImagePickerController.CameraFlashMode: AttributeDecodable {
     }
 }
 
-extension UIImagePickerController.QualityType: AttributeDecodable {
+extension UIImagePickerController.QualityType: @retroactive AttributeDecodable {
     public init(from attribute: Attribute?, on element: ElementNode) throws {
         guard let value = attribute?.value
         else { throw AttributeDecodingError.missingAttribute(Self.self) }
