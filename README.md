@@ -97,3 +97,5 @@ defmodule MyAppWeb.PhotosLive.SwiftUI do
   end
 end
 ```
+
+https://github.com/user-attachments/assets/b0305e46-d60c-4479-8469-3c146ebf8312
