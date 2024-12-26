@@ -54,7 +54,7 @@ struct PhotosPicker<Root: RootRegistry>: View {
                     for photo in selection {
                         guard let data = try await photo.loadTransferable(type: Data.self)
                         else { continue }
-                        try await formModel?.queueFileUpload(id: phxUploadRef, contents: data, fileType: .png, name: name ?? "photo", coordinator: $liveElement.context.coordinator)
+                        try await formModel?.queueFileUpload(name: name ?? "photo", id: phxUploadRef, contents: data, fileType: .png, fileName: name ?? "photo", coordinator: $liveElement.context.coordinator)
                     }
                 } catch {
                     logger.log(level: .error, "\(error.localizedDescription)")
